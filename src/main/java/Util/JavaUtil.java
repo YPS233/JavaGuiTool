@@ -4,14 +4,18 @@ import jadx.api.JadxArgs;
 import jadx.api.JadxDecompiler;
 
 import java.io.*;
+import java.nio.file.Paths;
 import java.util.*;
+import java.nio.file.Files;
+
 
 public class JavaUtil {
     public static Map base64Tojava(String base64Data) throws IOException {
         byte[] b = Base64.getDecoder().decode(base64Data);
-        String tempPath = System.getProperty("java.io.tmpdir")+File.separator;
+        String tempPath = System.getProperty("java.io.tmpdir");
         String outputPath = tempPath + "output/";
         writeFile(tempPath + "temp.class", b);
+        System.out.println(outputPath);
 
         JadxArgs jadxArgs = new JadxArgs();
         jadxArgs.setInputFile(new File(tempPath + "temp.class"));
@@ -27,6 +31,9 @@ public class JavaUtil {
 
         HashMap map = new HashMap();
         getJava(fileList, map);
+
+        // delete temp dir
+        deleteDirectory(new File(outputPath));
         return map;
     }
 
@@ -75,6 +82,24 @@ public class JavaUtil {
 
         String content = stringBuilder.toString();
         return content;
+    }
+
+    public static void deleteDirectory(File directory) {
+
+        //文件是否为目录
+        if(directory.isDirectory()) {
+            File[] files = directory.listFiles();
+
+            //如果目录包含任何文件
+            if(files != null) {
+                for(File file : files) {
+
+                    //如果子目录为非空，则进行递归调用
+                    deleteDirectory(file);
+                }
+            }
+        }
+        directory.delete();
     }
 
     public static void main(String[] args) throws IOException {
