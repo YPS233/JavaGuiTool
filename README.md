@@ -20,5 +20,8 @@ java -jar GuiTool-1.0.jar
 - [ ] 上传class转化为base64
 - [ ] ...
 
+
+![](image/example.gif)
+
 ### 参考链接
 https://github.com/java-decompiler/jd-core
