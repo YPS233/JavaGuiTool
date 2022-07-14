@@ -3,6 +3,7 @@ package Util;
 import jadx.api.JadxArgs;
 import jadx.api.JadxDecompiler;
 
+import javax.swing.*;
 import java.io.*;
 import java.nio.file.Paths;
 import java.util.*;
@@ -24,6 +25,7 @@ public class JavaUtil {
             jadx.load();
             jadx.save();
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "反编译失败", "错误", JOptionPane.INFORMATION_MESSAGE);
             e.printStackTrace();
         }
         List<File> fileList = new ArrayList<>();

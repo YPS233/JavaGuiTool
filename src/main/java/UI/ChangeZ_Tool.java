@@ -60,10 +60,14 @@ public class ChangeZ_Tool {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String base64Data = textAreaBase64.getText();
-                Map<String,String> javaMap;
+                Map<String,String> javaMap = null;
                 try {
                     javaMap = JavaUtil.base64Tojava(base64Data);
-                } catch (IOException ex) {
+                }catch (IllegalArgumentException ei){
+                    JOptionPane.showMessageDialog(null, "非法的base64字符串", "错误", JOptionPane.INFORMATION_MESSAGE);
+
+                }
+                catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
 
